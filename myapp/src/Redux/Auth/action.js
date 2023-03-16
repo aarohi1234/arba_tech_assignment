@@ -1,39 +1,37 @@
-import * as types from "./actionTypes"
-import axios from "axios";
-// export const userLogin = (payload) => (dispatch) => {
-//   console.log(payload)
-//   dispatch({ type: types.USER_LOGIN_REQUEST });
-//   return axios
-//     .post(`https://fakestoreapi.com/auth/login`, payload)
-//     .then((res) => {
-//       console.log(res.data)
-//       return dispatch({ type: types.USER_LOGIN_SUCCESS, payload: res.data });
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//       dispatch({ type: types.USER_LOGIN_FAILURE, payload: err });
-//     });
-// }
+import { GET_AUTH_FAILURE, GET_AUTH_SUCCESS, GET_TERMS_ACCEPTED } from "./actionTypes";
 
-export const userLogin = (payload) => (dispatch) => {
-  dispatch({ type: types.USER_LOGIN_REQUEST });
-  fetch('https://fakestoreapi.com/auth/login', {
-    method: 'POST',
-    body: JSON.stringify({
-      username: "mor_2314",
-      password: "83r5^_"
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then(res => res.json()).then(res => {
-      return dispatch({ type: types.USER_LOGIN_SUCCESS, payload: res.token });
+export const UserLogin = (data) => (dispatch) => {
+  try {
+    fetch("https://fakestoreapi.com/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     })
+      .then((res) => res.json())
+      .then((json) => {
+        dispatch({ type: GET_AUTH_SUCCESS, payload: json.token });
+      });
+  } catch (error) {
+    dispatch({ type: GET_AUTH_FAILURE });
+  }
+};
 
-    .catch((err) => {
-      console.log(err);
-      dispatch({ type: types.USER_LOGIN_FAILURE, payload: err });
-    });
 
+export const handleTerms=()=>dispatch=>{
+    try {
+        dispatch({type:GET_TERMS_ACCEPTED})
+        
+    } catch (error) {
+        
+    }
+}
+export const handleLogout=()=>dispatch=>{
+    try {
+        dispatch({type:GET_AUTH_FAILURE})
+        
+    } catch (error) {
+        
+    }
 }

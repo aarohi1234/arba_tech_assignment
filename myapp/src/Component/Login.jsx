@@ -1,105 +1,106 @@
-import {
-  Box,
-  Button,
-  InputGroup,
-  InputRightElement,
-  Input,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { userLogin } from "./../Redux/Auth/action";
+
+import { UserLogin } from "../Redux/Auth/action";
 import { Side } from "./Side";
+import { Box, InputGroup, Stack, Input, Button, Text } from "@chakra-ui/react";
 import { Logo } from "./Logo";
 
 export function Login() {
-  let [data, setData] = useState(false);
-  let [username, setUsername] = useState("mor_2314");
-  let [password, setPassword] = useState("82r5^_");
-  let dispatch = useDispatch();
+  const [data, setdata] = useState({
+    username: "",
+    password: "",
+  });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { auth, token } = useSelector((store) => store.auth);
 
-  let handleData = (e) => {
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setdata({ ...data, [name]: value });
+  }
+
+  function handleLogin(e) {
     e.preventDefault();
-    let payload = {
-      username,
-      password,
-    };
-    dispatch(userLogin());
-    alert("Login success");
-    navigate("/home");
-  };
+    if (data.username === "mor_2314" && data.password === "83r5^_") {
+      dispatch(UserLogin(data));
+      navigate("/home");
+    } else {
+      alert(`wrong credentials "`);
+    }
+  }
+
   return (
-    <Box>
-      <Box
-        m={"auto"}
-        boxShadow={"md"}
-        width={{ base: "95%", sm: "55%", md: "70%", lg: "65%", xl: "50%" }}
-        h={"80vh"}
-        mt={10}
-        display={"flex"}>
-        <Side />
-
+    <>
+      <Box>
         <Box
-          gap={5}
-          padding={{ base: 4, sm: 6, md: 6, lg: 8, xl: 10 }}
-          display={"flex"}
-          alignItems={"center"}
-          flexDir={"column"}
-          justifyItems={"center"}
-          w={{ base: "100%", sm: "100%", md: "50%", lg: "50%", xl: "50%" }}>
-          <Logo />
-
-          <Text>Make your shopping easy</Text>
-          <Box width="100%">
-            <form onSubmit={handleData}>
-              <Stack spacing={4}>
+          m={"auto"}
+          boxShadow={"md"}
+          width={{ base: "96%", sm: "50%", md: "72%", lg: "68%", xl: "53%" }}
+          h={"90vh"}
+          mt={10}
+          display={"flex"}>
+          <Side />
+          <Box
+            gap={5}
+            padding={{ base: 4, sm: 6, md: 6, lg: 8, xl: 10 }}
+            display={"flex"}
+            alignItems={"center"}
+            flexDir={"column"}
+            justifyItems={"center"}
+            w={{ base: "100%", sm: "100%", md: "50%", lg: "50%", xl: "50%" }}>
+            <div
+              style={{
+                width: "70px",
+                height: " 70px",
+                backgroundColor: "rgb(30, 173, 173)",
+                borderRadius: "100%",
+              }}></div>
+            <Stack spacing={4}>
+              <Text fontSize={30} fontWeight={600}>
+                APP NAME
+              </Text>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit ?</p>
+              <form action="">
                 <Input
-                  value={username}
-                  placeholder="Username"
                   borderBottom="2px solid skyblue"
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-
+                  placeholder="Username"
+                  name="username"
+                  onChange={(e) => handleChange(e)}
+                />{" "}
+                <br />
                 <InputGroup>
                   <Input
-                    value={password}
+                    mt={2}
                     placeholder="Password"
-                    type={data ? "text" : "password"}
                     borderBottom="2px solid skyblue"
-                    onChange={(e) => setPassword(e.target.value)}
+                    name="password"
+                    onChange={(e) => handleChange(e)}
                   />
-                  <InputRightElement width="4.5rem">
-                    <Button onClick={() => setData((data) => !data)}>
-                      {data ? (
-                        <ViewIcon color={"skyblue"} />
-                      ) : (
-                        <ViewOffIcon color={"skyblue"} />
-                      )}
-                    </Button>
-                  </InputRightElement>
+                  <br />
                 </InputGroup>
-                <Input
-                  type={"submit"}
-                  cursor={"pointer"}
-                  placeholder={"Login"}
-                  bgColor={"skyblue"}
-                  color={"white"}
-                />
-                <Text>
-                  Don't have an account?{" "}
-                  <Link to={"/signup"} style={{ color: "skyblue" }}>
-                    Sign up
-                  </Link>
-                </Text>
-              </Stack>
-            </form>
+                <Button
+                  mt={3}
+                  _hover="none"
+                  width={"full"}
+                  bgColor="rgb(44, 203, 203)"
+                  type="submit"
+                  onClick={(e) => handleLogin(e)}>
+                  Login
+                </Button>
+              </form>
+
+              <h5>
+                Don't have an account?{" "}
+                <Link to={"/signup"} style={{ color: "skyblue" }}>
+                  Signup
+                </Link>
+              </h5>
+            </Stack>
           </Box>
         </Box>
       </Box>
-    </Box>
+    </>
   );
 }

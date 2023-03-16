@@ -24,15 +24,15 @@ export function Navbar() {
       height={"90px"}
       alignItems={"center"}
       justifyContent="space-between"
-      bgColor={"teal"}
+      bgColor={"white"}
       position={"sticky"}
       top={0}>
       <Logo />
 
       <Flex gap={"50px"} alignItems={"center"}>
-        <Box position={"relative"}>
+        <Box position={"relative"} >
           <Link to={"/cart"}>
-            <GrCart color="white" />
+            <GrCart  color="white" />
           </Link>
           <Box
             top={"-8px"}

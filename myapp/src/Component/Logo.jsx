@@ -1,10 +1,11 @@
-import { Box,Image} from '@chakra-ui/react'
+import { Box,Button} from '@chakra-ui/react'
 import React from 'react'
+import { Navigate } from 'react-router-dom'
 
 export const Logo = () => {
   return (
     <Box>
-    <Image borderRadius={"100%"} src='./images.png' h={20} w={20} />
+     <Button bgColor={"rgb(44, 203, 203)"} color="white" onClick={() => Navigate("/")}> Logo</Button>{" "}
 </Box>
   )
 }

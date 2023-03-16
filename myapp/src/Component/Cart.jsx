@@ -52,7 +52,7 @@ const Cart = () => {
                       </Text>
                     </Stack>
                   </CardBody>
-                  <Divider />
+                 
                   <CardFooter>
                     <ButtonGroup spacing="2">
                       <Box alignItems={"center"}>
@@ -68,7 +68,7 @@ const Cart = () => {
         </SimpleGrid>
       </Box>
       <Box float="right" p="1">
-        <Button bg="skyblue" color="white">
+        <Button bg="(44, 203, 203)" color="white">
           Checkout
         </Button>
       </Box>
